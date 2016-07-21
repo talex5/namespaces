@@ -88,6 +88,11 @@ let namespace_file base_name =
 let library_list_file base_name =
   sprintf "%s.mllib" base_name
 
+let readdir path =
+  let items = Sys.readdir path in
+  Array.sort String.compare items;
+  items
+
 (* Recursively traverses the source tree. Keeps track of the current filesystem
    path as a list of strings. Keeps track of the current namespace path in the
    same way. The namespace path is extended when a directory is encountered that
@@ -178,7 +183,7 @@ let scan_tree :
 
     let rec traverse library directory namespace members_acc =
       path_to_string directory
-      |> Sys.readdir
+      |> readdir
       |> Array.fold_left
         (fun members_acc entry ->
           let entry_path = directory @ [entry] in

@@ -46,10 +46,15 @@ let handler ?(generators = Generators.builtin) ?(filter = plugin_filter) =
     include_files_sharing_namespace_title ()
   | _           -> ()
 
+let readdir path =
+  let items = Sys.readdir path in
+  Array.sort String.compare items;
+  items
+
 let delete_mllib_files () =
   let rec traverse path =
     path
-    |> Sys.readdir
+    |> readdir
     |> Array.iter (fun entry ->
       let path = Filename.concat path entry in
       if Sys.is_directory path then
