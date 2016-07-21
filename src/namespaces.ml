@@ -48,7 +48,7 @@ let handler ?(generators = Generators.builtin) ?(filter = plugin_filter) =
 
 let readdir path =
   let items = Sys.readdir path in
-  Array.sort String.compare items;
+  Array.sort (fun a b -> String.compare b a) items;
   items
 
 let delete_mllib_files () =

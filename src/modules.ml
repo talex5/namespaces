@@ -90,7 +90,7 @@ let library_list_file base_name =
 
 let readdir path =
   let items = Sys.readdir path in
-  Array.sort String.compare items;
+  Array.sort (fun a b -> String.compare b a) items;
   items
 
 (* Recursively traverses the source tree. Keeps track of the current filesystem
